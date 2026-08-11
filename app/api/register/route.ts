@@ -1,23 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { isAllowed } from '@/lib/rateLimit';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/**
- * Lightweight, robust HTML-escaping utility to prevent XSS (Cross-Site Scripting)
- */
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .replace(/\//g, '&#x2F;');
-}
-
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || '127.0.0.1';
+
+    // In-memory IP rate-limiting: Max 10 registrations per hour
+    if (!isAllowed(ip, 'register')) {
+      return NextResponse.json(
+        { error: 'Too many registration requests from this IP. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
 
     // 1. Destructure & validation
@@ -30,7 +28,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Trim inputs
+    // Trim inputs (store raw values to prevent double-escaping; React escapes on render)
     name = name.trim();
     email = email.trim().toLowerCase();
     institution = institution.trim();
@@ -65,11 +63,6 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-
-    // Sanitize user-rendered inputs to protect against XSS (no complex parsing overhead needed)
-    name = escapeHtml(name);
-    email = escapeHtml(email);
-    institution = escapeHtml(institution);
 
     // 3. Database operation with SQL Injection prevention using Prisma ORM parameterized queries
     const existing = await prisma.registration.findUnique({

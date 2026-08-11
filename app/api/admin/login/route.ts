@@ -2,9 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma, isMock } from '@/lib/db';
 import bcrypt from 'bcrypt';
 import { createSessionToken } from '@/lib/session';
+import { isAllowed } from '@/lib/rateLimit';
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || '127.0.0.1';
+
+    // In-memory IP rate-limiting: Max 5 attempts per minute
+    if (!isAllowed(ip, 'login')) {
+      return NextResponse.json(
+        { error: 'Too many login attempts. Please try again in a minute.' },
+        { status: 429 }
+      );
+    }
+
     const { username, password } = await req.json();
 
     if (!username || !password) {
@@ -16,15 +27,21 @@ export async function POST(req: NextRequest) {
       try {
         const adminCount = await prisma.admin.count();
         if (adminCount === 0) {
-          const defaultPassword = process.env.ADMIN_PASSWORD || 'quantum2025';
-          const defaultHashedPassword = await bcrypt.hash(defaultPassword, 10);
-          await prisma.admin.create({
-            data: {
-              username: 'admin',
-              password: defaultHashedPassword,
-            },
-          });
-          console.log('Successfully auto-seeded default admin user in live database.');
+          const adminPassword = process.env.ADMIN_PASSWORD;
+          if (!adminPassword) {
+            console.warn(
+              'WARNING: Admin table is empty, but ADMIN_PASSWORD environment variable is not set. Skipping admin account auto-seeding.'
+            );
+          } else {
+            const defaultHashedPassword = await bcrypt.hash(adminPassword, 10);
+            await prisma.admin.create({
+              data: {
+                username: 'admin',
+                password: defaultHashedPassword,
+              },
+            });
+            console.log('Successfully auto-seeded admin user in live database using ADMIN_PASSWORD.');
+          }
         }
       } catch (seedErr) {
         console.error('Auto-seeding check error:', seedErr);
