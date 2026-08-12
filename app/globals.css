@@ -7,14 +7,14 @@ html {
 }
 
 :root {
-  --foreground-rgb: 26, 26, 26;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 245, 243, 250;
+  --foreground-rgb: 226, 232, 240;
+  --background-start-rgb: 7, 18, 43;
+  --background-end-rgb: 11, 21, 51;
 }
 
 body {
-  color: #1A1A1A;
-  background: #FFFFFF;
+  color: #E2E8F0;
+  background: #07122B;
 }
 
 @layer utilities {
