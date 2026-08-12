@@ -66,10 +66,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const validRoles = ['student', 'professor', 'interested'];
+    const validRoles = ['student', 'professor'];
     if (!validRoles.includes(role)) {
       return NextResponse.json(
-        { error: 'Invalid selection. Choose either Student, Professor, or Interested in Quantum Tech.' },
+        { error: 'Invalid selection. Choose either Student, Professor.' },
         { status: 400 }
       );
     }
