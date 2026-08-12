@@ -5,6 +5,7 @@ export interface RegistrationData {
   id: string;
   name: string;
   email: string;
+  phone: string;
   institution: string;
   role: string;
   createdAt: Date;
@@ -46,6 +47,7 @@ class MockDatabase {
               (r) =>
                 r.name.toLowerCase().includes(search) ||
                 r.email.toLowerCase().includes(search) ||
+                r.phone.toLowerCase().includes(search) ||
                 r.institution.toLowerCase().includes(search)
             );
           }

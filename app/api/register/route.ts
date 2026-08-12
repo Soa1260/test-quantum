@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import { isAllowed } from '@/lib/rateLimit';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Regex for phone numbers: Allows optional leading +, digits, spaces, parentheses, hyphens
+const phoneRegex = /^\+?[0-9\s\-\(\)]+$/;
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,11 +21,11 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     // 1. Destructure & validation
-    let { name, email, institution, role } = body;
+    let { name, email, phone, institution, role } = body;
 
-    if (!name || !email || !institution || !role) {
+    if (!name || !email || !phone || !institution || !role) {
       return NextResponse.json(
-        { error: 'All fields (Name, Email, Institution, Role) are strictly required.' },
+        { error: 'All fields (Name, Email, Phone, Institution, Role) are strictly required.' },
         { status: 400 }
       );
     }
@@ -31,6 +33,7 @@ export async function POST(req: NextRequest) {
     // Trim inputs (store raw values to prevent double-escaping; React escapes on render)
     name = name.trim();
     email = email.trim().toLowerCase();
+    phone = phone.trim();
     institution = institution.trim();
     role = role.trim().toLowerCase();
 
@@ -45,6 +48,13 @@ export async function POST(req: NextRequest) {
     if (!emailRegex.test(email) || email.length > 100) {
       return NextResponse.json(
         { error: 'Please provide a valid, secure email address.' },
+        { status: 400 }
+      );
+    }
+
+    if (!phoneRegex.test(phone) || phone.length < 5 || phone.length > 20) {
+      return NextResponse.json(
+        { error: 'Please provide a valid phone number (between 5 and 20 digits).' },
         { status: 400 }
       );
     }
@@ -80,6 +90,7 @@ export async function POST(req: NextRequest) {
       data: {
         name,
         email,
+        phone,
         institution,
         role,
       },
