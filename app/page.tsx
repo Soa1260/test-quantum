@@ -174,7 +174,7 @@ export default function Home() {
               <MapPin className="w-5 h-5 text-[#4DD8FF] shrink-0" />
               <div className="text-left">
                 <p className="text-gray-400 text-[10px] uppercase font-bold">Venue</p>
-                <p className="font-semibold text-white">IAR Campus, Gandhinagar</p>
+                <p className="font-semibold text-white">IAR Campus- Block-A3 Auditorium, Gandhinagar</p>
               </div>
             </div>
 
