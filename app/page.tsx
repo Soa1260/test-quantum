@@ -16,13 +16,15 @@ import {
   Users,
   Terminal,
   Building,
-  GraduationCap
+  GraduationCap,
+  Phone
 } from 'lucide-react';
 
 export default function Home() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     institution: '',
     role: 'student',
   });
@@ -67,6 +69,7 @@ export default function Home() {
       setFormData({
         name: '',
         email: '',
+        phone: '',
         institution: '',
         role: 'student',
       });
@@ -155,7 +158,7 @@ export default function Home() {
               <Calendar className="w-5 h-5 text-[#4DD8FF] shrink-0" />
               <div className="text-left">
                 <p className="text-gray-400 text-[10px] uppercase font-bold">Date</p>
-                <p className="font-semibold text-white">13 August 2025</p>
+                <p className="font-semibold text-white">21 August 2026</p>
               </div>
             </div>
 
@@ -163,7 +166,7 @@ export default function Home() {
               <Clock className="w-5 h-5 text-[#8B5CF6] shrink-0" />
               <div className="text-left">
                 <p className="text-gray-400 text-[10px] uppercase font-bold">Time</p>
-                <p className="font-semibold text-white">10:30 AM – 1:00 PM</p>
+                <p className="font-semibold text-white">9:00 AM – 1:00 PM</p>
               </div>
             </div>
 
@@ -388,6 +391,23 @@ export default function Home() {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="yourname@domain.com"
+                  className="w-full bg-[#EDEBF5]/50 border border-[#EDEBF5] focus:border-[#8B5CF6] text-sm rounded-xl py-3 px-4 focus:outline-none transition font-medium"
+                />
+              </div>
+
+              {/* Phone Number */}
+              <div>
+                <label className="block text-xs font-bold uppercase text-[#0B1533] tracking-wide mb-1.5 flex items-center gap-1">
+                  <Phone className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  required
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="e.g. +91 98765 43210 or (555) 019-2834"
                   className="w-full bg-[#EDEBF5]/50 border border-[#EDEBF5] focus:border-[#8B5CF6] text-sm rounded-xl py-3 px-4 focus:outline-none transition font-medium"
                 />
               </div>

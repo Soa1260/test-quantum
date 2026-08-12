@@ -1,38 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { isAllowed } from '@/lib/rateLimit';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-/**
- * Lightweight, robust HTML-escaping utility to prevent XSS (Cross-Site Scripting)
- */
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .replace(/\//g, '&#x2F;');
-}
+// Regex for phone numbers: Allows optional leading +, digits, spaces, parentheses, hyphens
+const phoneRegex = /^\+?[0-9\s\-\(\)]+$/;
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || '127.0.0.1';
+
+    // In-memory IP rate-limiting: Max 10 registrations per hour
+    if (!isAllowed(ip, 'register')) {
+      return NextResponse.json(
+        { error: 'Too many registration requests from this IP. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
 
     // 1. Destructure & validation
-    let { name, email, institution, role } = body;
+    let { name, email, phone, institution, role } = body;
 
-    if (!name || !email || !institution || !role) {
+    if (!name || !email || !phone || !institution || !role) {
       return NextResponse.json(
-        { error: 'All fields (Name, Email, Institution, Role) are strictly required.' },
+        { error: 'All fields (Name, Email, Phone, Institution, Role) are strictly required.' },
         { status: 400 }
       );
     }
 
-    // Trim inputs
+    // Trim inputs (store raw values to prevent double-escaping; React escapes on render)
     name = name.trim();
     email = email.trim().toLowerCase();
+    phone = phone.trim();
     institution = institution.trim();
     role = role.trim().toLowerCase();
 
@@ -47,6 +48,13 @@ export async function POST(req: NextRequest) {
     if (!emailRegex.test(email) || email.length > 100) {
       return NextResponse.json(
         { error: 'Please provide a valid, secure email address.' },
+        { status: 400 }
+      );
+    }
+
+    if (!phoneRegex.test(phone) || phone.length < 5 || phone.length > 20) {
+      return NextResponse.json(
+        { error: 'Please provide a valid phone number (between 5 and 20 digits).' },
         { status: 400 }
       );
     }
@@ -66,11 +74,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Sanitize user-rendered inputs to protect against XSS (no complex parsing overhead needed)
-    name = escapeHtml(name);
-    email = escapeHtml(email);
-    institution = escapeHtml(institution);
-
     // 3. Database operation with SQL Injection prevention using Prisma ORM parameterized queries
     const existing = await prisma.registration.findUnique({
       where: { email },
@@ -87,6 +90,7 @@ export async function POST(req: NextRequest) {
       data: {
         name,
         email,
+        phone,
         institution,
         role,
       },

@@ -1,6 +1,10 @@
 import crypto from 'crypto';
 
-const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || 'quantum-tech-event-secure-session-secret-2025-key';
+if (!process.env.ADMIN_SESSION_SECRET) {
+  throw new Error("CRITICAL STARTUP ERROR: ADMIN_SESSION_SECRET environment variable is required.");
+}
+
+const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET;
 
 /**
  * Creates a cryptographically signed session token: username:expiry:signature

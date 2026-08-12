@@ -5,6 +5,7 @@ export interface RegistrationData {
   id: string;
   name: string;
   email: string;
+  phone: string;
   institution: string;
   role: string;
   createdAt: Date;
@@ -22,8 +23,9 @@ class MockDatabase {
   private admins: AdminData[] = [];
 
   constructor() {
-    // Standard mock admin account: admin / quantum2025
-    // Bcrypt hash for "quantum2025" is $2b$10$ONFJBvnHZ.Trbor/.qIf6uoisg85Upo.0Y9i1coH90Rcw4WzoW5wO
+    // CRITICAL SECURITY WARNING: The following default mock account is strictly for local development and testing only.
+    // This mock in-memory database route MUST NEVER be activated or used in a production environment.
+    // Production deployments must always supply a valid and secure database connection string via DATABASE_URL.
     this.admins.push({
       id: 'admin-id-1',
       username: 'admin',
@@ -45,6 +47,7 @@ class MockDatabase {
               (r) =>
                 r.name.toLowerCase().includes(search) ||
                 r.email.toLowerCase().includes(search) ||
+                r.phone.toLowerCase().includes(search) ||
                 r.institution.toLowerCase().includes(search)
             );
           }

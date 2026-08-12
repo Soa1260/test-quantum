@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -37,12 +37,7 @@ export default function AdminPortal() {
     interested: 0,
   });
 
-  // Check login cookie on load
-  useEffect(() => {
-    fetchRegistrations();
-  }, []);
-
-  const fetchRegistrations = async () => {
+  const fetchRegistrations = useCallback(async () => {
     setLoadingData(true);
     try {
       const response = await fetch('/api/admin/registrations');
@@ -59,7 +54,12 @@ export default function AdminPortal() {
     } finally {
       setLoadingData(false);
     }
-  };
+  }, []);
+
+  // Check login cookie on load
+  useEffect(() => {
+    fetchRegistrations();
+  }, [fetchRegistrations]);
 
   const calculateStats = (list: any[]) => {
     const students = list.filter((r) => r.role === 'student').length;
@@ -137,6 +137,7 @@ export default function AdminPortal() {
     const matchesSearch =
       r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       r.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (r.phone || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       r.institution.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesRole = roleFilter === 'all' || r.role === roleFilter;
@@ -146,11 +147,11 @@ export default function AdminPortal() {
 
   // Export as simple custom download format
   const handleExport = () => {
-    const headers = ['ID', 'Name', 'Email', 'Institution', 'Role', 'Date Registered'];
+    const headers = ['ID', 'Name', 'Email', 'Phone', 'Institution', 'Role', 'Date Registered'];
     const csvContent = [
       headers.join(','),
       ...filteredRegistrations.map((r) =>
-        [r.id, `"${r.name}"`, r.email, `"${r.institution}"`, r.role, r.createdAt].join(',')
+        [r.id, `"${r.name}"`, r.email, `"${r.phone || ''}"`, `"${r.institution}"`, r.role, r.createdAt].join(',')
       )
     ].join('\n');
 
@@ -387,6 +388,7 @@ export default function AdminPortal() {
                   <tr className="bg-[#EDEBF5]/40 text-[#0B1533] uppercase tracking-wider font-extrabold border-b border-[#EDEBF5]">
                     <th className="p-4">Participant Name</th>
                     <th className="p-4">Email</th>
+                    <th className="p-4">Phone</th>
                     <th className="p-4">Institution / University / School</th>
                     <th className="p-4">Role</th>
                     <th className="p-4">Date Registered</th>
@@ -398,6 +400,7 @@ export default function AdminPortal() {
                     <tr key={record.id} className="hover:bg-gray-50/50 transition">
                       <td className="p-4 font-bold text-[#0B1533]">{record.name}</td>
                       <td className="p-4 font-medium text-gray-600">{record.email}</td>
+                      <td className="p-4 font-semibold text-[#8B5CF6]">{record.phone}</td>
                       <td className="p-4 font-semibold text-gray-700">{record.institution}</td>
                       <td className="p-4">
                         <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase ${
