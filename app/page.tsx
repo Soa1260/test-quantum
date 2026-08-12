@@ -433,7 +433,7 @@ export default function Home() {
               {/* Role Select */}
               <div>
                 <label className="block text-xs font-bold uppercase text-[#0B1533] tracking-wide mb-1.5">
-                  Are you a Student, Professor, or Interested?
+                  Are you a Student, Professor/Teacher?
                 </label>
                 <select
                   name="role"
@@ -451,7 +451,7 @@ export default function Home() {
                 disabled={loading}
                 className="w-full bg-[#5B2C9E] hover:bg-[#7B3FE4] text-white font-bold py-3.5 px-6 rounded-xl transition duration-300 shadow-lg shadow-[#5B2C9E]/10 disabled:opacity-50 text-sm flex items-center justify-center gap-2 mt-2"
               >
-                {loading ? 'Processing Securely...' : 'Register and Generate Access Card'}
+                {loading ? 'Processing Securely...' : 'Registered'}
               </button>
 
             </form>
