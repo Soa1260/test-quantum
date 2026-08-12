@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma, isMock } from '@/lib/db';
+import { prisma } from '@/lib/db';
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import { createSessionToken } from '@/lib/session';
 import { isAllowed } from '@/lib/rateLimit';
+
+function secureCompare(a: string, b: string): boolean {
+  const aHash = crypto.createHash('sha256').update(a).digest();
+  const bHash = crypto.createHash('sha256').update(b).digest();
+  return crypto.timingSafeEqual(aHash, bHash);
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,45 +29,35 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Username and password are required' }, { status: 400 });
     }
 
-    // Auto-seed admin user for live databases if they are empty
-    if (!isMock) {
-      try {
-        const adminCount = await prisma.admin.count();
-        if (adminCount === 0) {
-          const adminPassword = process.env.ADMIN_PASSWORD;
-          if (!adminPassword) {
-            console.warn(
-              'WARNING: Admin table is empty, but ADMIN_PASSWORD environment variable is not set. Skipping admin account auto-seeding.'
-            );
-          } else {
-            const defaultHashedPassword = await bcrypt.hash(adminPassword, 10);
-            await prisma.admin.create({
-              data: {
-                username: 'admin',
-                password: defaultHashedPassword,
-              },
-            });
-            console.log('Successfully auto-seeded admin user in live database using ADMIN_PASSWORD.');
-          }
-        }
-      } catch (seedErr) {
-        console.error('Auto-seeding check error:', seedErr);
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) {
+      return NextResponse.json(
+        { error: 'Admin authentication is not configured on the server.' },
+        { status: 500 }
+      );
+    }
+
+    let isAuthenticated = false;
+
+    // 1. Direct environment password check for username 'admin'
+    if (username === 'admin') {
+      if (secureCompare(password, adminPassword)) {
+        isAuthenticated = true;
       }
     }
 
-    // Lookup user in DB/mock database using parameters
-    const adminUser = await prisma.admin.findUnique({
-      where: { username },
-    });
-
-    if (!adminUser) {
-      // Avoid verbose errors: generic failure message to prevent username harvesting
-      return NextResponse.json({ error: 'Invalid username or password' }, { status: 401 });
+    // 2. Optional DB lookup fallback if not authenticated yet, with no automatic seeding
+    if (!isAuthenticated) {
+      const dbUser = await prisma.admin.findUnique({
+        where: { username },
+      });
+      if (dbUser) {
+        isAuthenticated = await bcrypt.compare(password, dbUser.password);
+      }
     }
 
-    // Verify hash with bcrypt
-    const match = await bcrypt.compare(password, adminUser.password);
-    if (!match) {
+    if (!isAuthenticated) {
+      // Avoid verbose errors: generic failure message to prevent username harvesting
       return NextResponse.json({ error: 'Invalid username or password' }, { status: 401 });
     }
 

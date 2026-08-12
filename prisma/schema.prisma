@@ -14,7 +14,7 @@ model Registration {
   id          String   @id @default(uuid())
   name        String
   email       String   @unique
-  phone       String
+  phone       String?
   institution String
   role        String   // student, professor, interested
   createdAt   DateTime @default(now())
