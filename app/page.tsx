@@ -334,14 +334,14 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-3">
                   <UserCheck className="w-5 h-5 text-[#4DD8FF]" />
-                  <span>Admission ticket generated instantly</span>
+                  <span>Registration/Seat done instantly!</span>
                 </div>
               </div>
             </div>
 
             <div className="mt-8 pt-6 border-t border-white/10 text-[10px] text-gray-400">
               <p>Organised by: School of Humanities & Sciences, IAR University</p>
-              <p className="mt-1">© 2025 All Rights Reserved</p>
+              <p className="mt-1">© 2026 All Rights Reserved</p>
             </div>
           </div>
 
@@ -442,8 +442,7 @@ export default function Home() {
                   className="w-full bg-[#EDEBF5]/50 border border-[#EDEBF5] focus:border-[#8B5CF6] text-sm rounded-xl py-3.5 px-4 focus:outline-none transition font-medium"
                 >
                   <option value="student">Student</option>
-                  <option value="professor">Professor</option>
-                  <option value="interested">Interested in Quantum Tech</option>
+                  <option value="professor">Professor/Teacher</option>
                 </select>
               </div>
 
@@ -486,13 +485,13 @@ export default function Home() {
               IAR University Campus, Gyan Marg, Near GIFT City Bridge, Gandhinagar - 382426, Gujarat, India.
             </p>
             <p className="text-xs mt-2">
-              Auditorium Hall, Main Block.
+              Auditorium Hall, Auditorium A3Block.
             </p>
           </div>
           <div>
             <h5 className="font-extrabold text-white text-base mb-4 tracking-wide uppercase">Support & Contact</h5>
             <p className="text-xs leading-relaxed">
-              If you have any issues registering or would like to partner, please email the department at <span className="text-[#4DD8FF]">shs-events@iar.ac.in</span>.
+              If you have any issues registering or would like to partner, please email the department at <span className="text-[#4DD8FF]">head.shs@iar.ac.in</span>.
             </p>
           </div>
         </div>
@@ -501,7 +500,7 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           <div>
-            <p>© 2025 IAR University. All Rights Reserved.</p>
+            <p>© 2026 IAR University. All Rights Reserved.</p>
           </div>
           <div className="text-center md:text-right font-semibold">
             <p className="text-[#4DD8FF] text-xs">
