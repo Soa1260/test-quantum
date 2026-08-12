@@ -231,7 +231,7 @@ export default function AdminPortal() {
           </form>
 
           <p className="text-center text-[10px] text-gray-400 mt-6 leading-relaxed">
-            Note: Standard mock authentication is enabled by default. Secure connection strings automatically lock credentials in production.
+            Admin portal access only to SHS-HOD!
           </p>
 
         </div>
