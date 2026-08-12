@@ -400,7 +400,7 @@ export default function AdminPortal() {
                     <tr key={record.id} className="hover:bg-gray-50/50 transition">
                       <td className="p-4 font-bold text-[#0B1533]">{record.name}</td>
                       <td className="p-4 font-medium text-gray-600">{record.email}</td>
-                      <td className="p-4 font-semibold text-[#8B5CF6]">{record.phone}</td>
+                      <td className="p-4 font-semibold text-[#8B5CF6]">{record.phone || 'N/A'}</td>
                       <td className="p-4 font-semibold text-gray-700">{record.institution}</td>
                       <td className="p-4">
                         <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase ${
