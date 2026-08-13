@@ -135,7 +135,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto relative z-10 text-center">
 
           {/* Badge / Tag */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5B2C9E]/45 border border-[#8B5CF6]/50 text-[#4DD8FF] text-xs font-semibold tracking-wider uppercase mb-6 animate-[...]
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5B2C9E]/45 border border-[#8B5CF6]/50 text-[#4DD8FF] text-xs font-semibold tracking-wider uppercase mb-6"> animate-[...]
             <Atom className="w-4 h-4 text-[#4DD8FF] animate-spin" style={{ animationDuration: '4s' }} />
             Exclusive Guest Expert Talk
           </div>
