@@ -108,7 +108,7 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <a
               href="#register-section"
-              className="bg-[#5B2C9E] hover:bg-[#7B3FE4] text-white text-xs md:text-sm font-bold py-2 px-5 rounded-full shadow-lg shadow-[#5B2C9E]/20 transition duration-300 uppercase tracking-wide"
+              className="bg-[#5B2C9E] hover:bg-[#7B3FE4] text-white text-xs md:text-sm font-bold py-2 px-5 rounded-full shadow-lg shadow-[#5B2C9E]/20 transition duration-300 uppercase tracking-wi[...]"
             >
               Register Now
             </a>
@@ -135,7 +135,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto relative z-10 text-center">
 
           {/* Badge / Tag */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5B2C9E]/45 border border-[#8B5CF6]/50 text-[#4DD8FF] text-xs font-semibold tracking-wider uppercase mb-6"> animate-[...]
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5B2C9E]/45 border border-[#8B5CF6]/50 text-[#4DD8FF] text-xs font-semibold tracking-wider uppercase mb-6 animate-pulse">
             <Atom className="w-4 h-4 text-[#4DD8FF] animate-spin" style={{ animationDuration: '4s' }} />
             Exclusive Guest Expert Talk
           </div>
@@ -191,7 +191,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="#register-section"
-              className="w-full sm:w-auto bg-[#8B5CF6] hover:bg-[#7B3FE4] text-white font-bold py-3.5 px-8 rounded-full shadow-xl shadow-[#8B5CF6]/30 hover:scale-105 active:scale-95 transition text-center"
+              className="w-full sm:w-auto bg-[#8B5CF6] hover:bg-[#7B3FE4] text-white font-bold py-3.5 px-8 rounded-full shadow-xl shadow-[#8B5CF6]/30 hover:scale-105 active:scale-95 transition te[...]"
             >
               Secure Your Spot Now
             </a>
@@ -226,7 +226,7 @@ export default function Home() {
           </p>
 
           <p className="text-base text-[#1A1A1A] leading-relaxed">
-            Organised proudly by the <strong>School of Humanities and Sciences at IAR University</strong>, this expert interaction provides a unique opportunity to connect directly with an industry leader.
+            Organised proudly by the <strong>School of Humanities and Sciences at IAR University</strong>, this expert interaction provides a unique opportunity to connect directly with an indust[...]
           </p>
 
           {/* Topics Covered */}
@@ -293,7 +293,7 @@ export default function Home() {
             <div className="h-px bg-gray-300 my-6"></div>
 
             <p className="text-xs text-gray-600 leading-relaxed text-left">
-              Mr. Atul Tripathi is an acclaimed pioneer heading the Quantum and Space practice at PricewaterhouseCoopers (PwC). With extensive leadership experience globally, he is helping shape public policy on quantum and space technologies globally.
+              Mr. Atul Tripathi is an acclaimed pioneer heading the Quantum and Space practice at PricewaterhouseCoopers (PwC). With extensive leadership experience globally, he is helping shape [...]
             </p>
 
             <div className="bg-white/60 rounded-xl p-4 mt-6 text-left border border-white/80">
@@ -456,7 +456,7 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#5B2C9E] hover:bg-[#7B3FE4] text-white font-bold py-3.5 px-6 rounded-xl transition duration-300 shadow-lg shadow-[#5B2C9E]/10 disabled:opacity-50 text-sm flex items-center justify-center gap-2"
+                className="w-full bg-[#5B2C9E] hover:bg-[#7B3FE4] text-white font-bold py-3.5 px-6 rounded-xl transition duration-300 shadow-lg shadow-[#5B2C9E]/10 disabled:opacity-50 text-sm fle[...]"
               >
                 {loading ? 'Processing Securely...' : 'Registered'}
               </button>
@@ -483,7 +483,7 @@ export default function Home() {
           <div>
             <h5 className="font-extrabold text-white text-base mb-4 tracking-wide uppercase">Event Information</h5>
             <p className="text-xs leading-relaxed">
-              Explore the quantum landscape, cryptographic secure systems, and future career directions at this high-profile event by Mr. Atul Tripathi (PwC). Organized proudly with student support.
+              Explore the quantum landscape, cryptographic secure systems, and future career directions at this high-profile event by Mr. Atul Tripathi (PwC). Organized proudly with student suppo[...]
             </p>
           </div>
           <div>
