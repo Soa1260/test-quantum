@@ -182,7 +182,8 @@ export default function Home() {
               <Coffee className="w-5 h-5 text-[#8B5CF6] shrink-0 animate-pulse" />
               <div className="text-left">
                 <p className="text-gray-400 text-[10px] uppercase font-bold">Key Highlight</p>
-                <p className="font-semibold text-white">Networking Tea & Interaction</p>
+                <p className="font-semibold text-white">1- Awareness of Quantum Technologies.
+                2- Future Insight in Quantum Sector.</p>
               </div>
             </div>
           </div>
