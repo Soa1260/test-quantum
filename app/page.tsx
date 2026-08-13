@@ -46,6 +46,18 @@ export default function Home() {
     setStatus({ type: null, message: '' });
     setLoading(true);
 
+    // Client-side phone validation
+    const phoneTrimmed = formData.phone.trim();
+    const phoneRegexPattern = /^\+?[0-9\s\-\(\)]+$/;
+    if (!phoneRegexPattern.test(phoneTrimmed) || phoneTrimmed.length < 5 || phoneTrimmed.length > 20) {
+      setStatus({
+        type: 'error',
+        message: 'Please provide a valid phone number (between 5 and 20 digits).',
+      });
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -158,7 +170,7 @@ export default function Home() {
               <Calendar className="w-5 h-5 text-[#4DD8FF] shrink-0" />
               <div className="text-left">
                 <p className="text-gray-400 text-[10px] uppercase font-bold">Date</p>
-                <p className="font-semibold text-white">21 August 2026</p>
+                <p className="font-semibold text-white">13 August 2025 (Wednesday)</p>
               </div>
             </div>
 
@@ -166,7 +178,7 @@ export default function Home() {
               <Clock className="w-5 h-5 text-[#8B5CF6] shrink-0" />
               <div className="text-left">
                 <p className="text-gray-400 text-[10px] uppercase font-bold">Time</p>
-                <p className="font-semibold text-white">9:00 AM – 1:00 PM</p>
+                <p className="font-semibold text-white">10:30 AM – 1:00 PM</p>
               </div>
             </div>
 
@@ -174,7 +186,7 @@ export default function Home() {
               <MapPin className="w-5 h-5 text-[#4DD8FF] shrink-0" />
               <div className="text-left">
                 <p className="text-gray-400 text-[10px] uppercase font-bold">Venue</p>
-                <p className="font-semibold text-white">IAR Campus, Gandhinagar</p>
+                <p className="font-semibold text-white">IAR Campus A3building Auditorium</p>
               </div>
             </div>
 
@@ -272,9 +284,15 @@ export default function Home() {
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#4DD8FF]/20 rounded-full blur-2xl pointer-events-none"></div>
 
           <div className="text-center">
-            {/* Elegant avatar mock with initials inside bright circle */}
-            <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#5B2C9E] to-[#8B5CF6] flex items-center justify-center mx-auto shadow-md mb-4 border-4 border-white">
-              <span className="text-3xl font-black text-white tracking-widest">AT</span>
+            {/* Elegant profile image of speaker Mr. Atul Tripathi */}
+            <div className="relative w-28 h-28 rounded-full overflow-hidden mx-auto shadow-md mb-4 border-4 border-white bg-gradient-to-tr from-[#5B2C9E] to-[#8B5CF6]">
+              <Image
+                src="/assets/atul-hd-tripathi.png"
+                alt="Mr. Atul Tripathi"
+                fill
+                priority
+                className="object-cover"
+              />
             </div>
 
             <p className="text-[#8B5CF6] text-xs font-extrabold tracking-widest uppercase mb-1">Distinguished Speaker</p>
@@ -483,10 +501,10 @@ export default function Home() {
           <div>
             <h5 className="font-extrabold text-white text-base mb-4 tracking-wide uppercase">Venue & Directions</h5>
             <p className="text-xs leading-relaxed">
-              IAR University Campus, Gyan Marg, Near GIFT City Bridge, Gandhinagar - 382426, Gujarat, India.
+              IAR Campus A3building Auditorium, Gandhinagar - 382426, Gujarat, India.
             </p>
             <p className="text-xs mt-2">
-              Auditorium Hall, Main Block.
+              A3 Building, Auditorium Hall.
             </p>
           </div>
           <div>

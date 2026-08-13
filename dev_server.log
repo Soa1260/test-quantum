@@ -1,0 +1,28 @@
+
+> temp_next@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 1828ms
+ ○ Compiling / ...
+ ✓ Compiled / in 7.2s (621 modules)
+ GET / 200 in 8044ms
+ ✓ Compiled in 786ms (301 modules)
+ ○ Compiling /api/register ...
+ ✓ Compiled /admin in 3.6s (342 modules)
+ ✓ Compiled in 403ms (298 modules)
+Using robust In-Memory mock database client
+ POST /api/register 201 in 4241ms
+ GET /admin 200 in 2008ms
+ ✓ Compiled /api/admin/registrations in 145ms (359 modules)
+Using robust In-Memory mock database client
+ GET /api/admin/registrations 401 in 195ms
+ GET /api/admin/registrations 401 in 11ms
+ ✓ Compiled /api/admin/login in 190ms (362 modules)
+Using robust In-Memory mock database client
+ POST /api/admin/login 200 in 230ms
+ GET /api/admin/registrations 200 in 14ms
