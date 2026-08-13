@@ -135,7 +135,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto relative z-10 text-center">
 
           {/* Badge / Tag */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5B2C9E]/45 border border-[#8B5CF6]/50 text-[#4DD8FF] text-xs font-semibold tracking-wider uppercase mb-6 animate-bounce">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5B2C9E]/45 border border-[#8B5CF6]/50 text-[#4DD8FF] text-xs font-semibold tracking-wider uppercase mb-6 animate-[...]
             <Atom className="w-4 h-4 text-[#4DD8FF] animate-spin" style={{ animationDuration: '4s' }} />
             Exclusive Guest Expert Talk
           </div>
@@ -226,7 +226,7 @@ export default function Home() {
           </p>
 
           <p className="text-base text-[#1A1A1A] leading-relaxed">
-            Organised proudly by the <strong>School of Humanities and Sciences at IAR University</strong>, this expert interaction provides a unique opportunity to connect directly with an industry leader. Learn about core quantum principles, modern post-quantum cryptography, and practical quantum careers.
+            Organised proudly by the <strong>School of Humanities and Sciences at IAR University</strong>, this expert interaction provides a unique opportunity to connect directly with an industry leader.
           </p>
 
           {/* Topics Covered */}
@@ -273,9 +273,15 @@ export default function Home() {
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#4DD8FF]/20 rounded-full blur-2xl pointer-events-none"></div>
 
           <div className="text-center">
-            {/* Elegant avatar mock with initials inside bright circle */}
-            <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#5B2C9E] to-[#8B5CF6] flex items-center justify-center mx-auto shadow-md mb-4 border-4 border-white">
-              <span className="text-3xl font-black text-white tracking-widest">AT</span>
+            {/* Speaker avatar with image */}
+            <div className="relative w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-md">
+              <Image
+                src="/assets/atul-hd-tripathi.png"
+                alt="Atul Tripathi"
+                fill
+                className="object-cover"
+                sizes="96px"
+              />
             </div>
 
             <p className="text-[#8B5CF6] text-xs font-extrabold tracking-widest uppercase mb-1">Distinguished Speaker</p>
@@ -287,7 +293,7 @@ export default function Home() {
             <div className="h-px bg-gray-300 my-6"></div>
 
             <p className="text-xs text-gray-600 leading-relaxed text-left">
-              Mr. Atul Tripathi is an acclaimed pioneer heading the Quantum and Space practice at PricewaterhouseCoopers (PwC). With extensive leadership experience globally, he is helping shape public and private sector policies on next-generation computing and cyber defenses.
+              Mr. Atul Tripathi is an acclaimed pioneer heading the Quantum and Space practice at PricewaterhouseCoopers (PwC). With extensive leadership experience globally, he is helping shape public policy on quantum and space technologies globally.
             </p>
 
             <div className="bg-white/60 rounded-xl p-4 mt-6 text-left border border-white/80">
@@ -450,7 +456,7 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#5B2C9E] hover:bg-[#7B3FE4] text-white font-bold py-3.5 px-6 rounded-xl transition duration-300 shadow-lg shadow-[#5B2C9E]/10 disabled:opacity-50 text-sm flex items-center justify-center gap-2 mt-2"
+                className="w-full bg-[#5B2C9E] hover:bg-[#7B3FE4] text-white font-bold py-3.5 px-6 rounded-xl transition duration-300 shadow-lg shadow-[#5B2C9E]/10 disabled:opacity-50 text-sm flex items-center justify-center gap-2"
               >
                 {loading ? 'Processing Securely...' : 'Registered'}
               </button>
