@@ -158,7 +158,7 @@ export default function Home() {
               <Calendar className="w-5 h-5 text-[#4DD8FF] shrink-0" />
               <div className="text-left">
                 <p className="text-gray-400 text-[10px] uppercase font-bold">Date</p>
-                <p className="font-semibold text-white">21 August 2026</p>
+                <p className="font-semibold text-white">3rd September 2026</p>
               </div>
             </div>
 
